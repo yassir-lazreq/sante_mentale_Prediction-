@@ -51,3 +51,15 @@ Mental health conditions affect approximately **1 in 3 university students** glo
 | `Previous_Mental_Health_History` | binary | Prior diagnosed mental health condition | Yes, No |
 | `Mental_Health_Risk` | categorical | **TARGET** — predicted risk level | Low, Medium, High |
 
+## 📁 Project Structure
+
+```text
+data/raw/       Raw CSV datasets
+notebooks/      Exploratory analysis notebooks
+src/            Reusable data and modeling code
+models/         Trained model artifacts
+app/            Application code
+dag/            Airflow orchestration definitions
+```
+
+The primary dataset is stored at `data/raw/student_mental_health.csv`.
