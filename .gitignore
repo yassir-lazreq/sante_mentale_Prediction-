@@ -1,2 +1,38 @@
 docs/planification_jira.csv
-.venv/**
+
+# Local Python environments
+.venv/
+venv/
+env/
+
+# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter artifacts
+.ipynb_checkpoints/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Generated model and application artifacts
+models/*.pkl
+models/*.joblib
+models/*.h5
+models/*.onnx
+app/*.log
+dag/*.log
+logs/
+
+# Local OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
