@@ -113,7 +113,7 @@ def get_preprocessor(num_cols, cat_cols):
 
     # Numeric pipeline: Impute median -> Clip outliers -> Scale
     num_pipeline = Pipeline([
-        ('imputer', SimpleImputer(strategy='median')),
+        ('imputer', SimpleImputer(strategy='median', add_indicator=True)),
         ('clipper', IQRClipper(factor=1.5)),
         ('scaler', StandardScaler())
     ])
