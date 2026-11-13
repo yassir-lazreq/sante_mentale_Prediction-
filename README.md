@@ -7,13 +7,13 @@
 ## 📋 Problem Statement
 
 ### Context
-University students face a confluence of stressors — academic pressure, financial strain, social isolation, irregular sleep, and lifestyle disruptions — that place them at disproportionately high risk for mental health challenges. Despite growing awareness, early identification of at-risk students remains difficult due to the multifactorial nature of mental wellbeing.
+University students face a confluence of stressors — academic pressure, financial strain, social isolation, irregular sleep, and lifestyle disruptions — that place them at disproportionately high risk for mental health challenges. Despite growing awareness, early identification of support needs remains difficult due to the multifactorial nature of mental wellbeing.
 
 ### Objective
 Build a machine learning model that predicts the **mental health risk level** (Low / Medium / High) of a university student based on behavioral, academic, lifestyle, and psychosocial features collected through a simulated student survey.
 
 ### Why It Matters
-Mental health conditions affect approximately **1 in 3 university students** globally, yet most go undetected until they reach a crisis point. A predictive model could enable universities to proactively identify vulnerable students and offer early intervention — improving academic outcomes and student wellbeing simultaneously.
+Mental health conditions affect approximately **1 in 3 university students** globally, yet most go undetected until they reach a crisis point. This educational prototype is intended to study associations in simulated survey data. It is not a clinical diagnostic or screening system and must not be used to make disciplinary, selection, exclusion, or official individual-support decisions.
 
 ---
 
@@ -59,7 +59,41 @@ notebooks/      Exploratory analysis notebooks
 src/            Reusable data and modeling code
 models/         Trained model artifacts
 app/            Application code
-dag/            Airflow orchestration definitions
+dags/           Airflow orchestration definitions
 ```
 
 The primary dataset is stored at `data/raw/student_mental_health.csv`.
+
+## Airflow pipeline
+
+The `mental_health_training` DAG runs weekly and orchestrates:
+
+1. `prepare_data`: validates the input dataset and target.
+2. `preprocess_data`: fits the preprocessing pipeline on the training split only.
+3. `train_model`: tunes and saves the complete model pipeline.
+4. `evaluate_model`: writes test metrics and the confusion matrix.
+
+Start Airflow locally with:
+
+```powershell
+docker compose up -d
+```
+
+Open `http://localhost:8080`, enable `mental_health_training`, and use **Trigger DAG** for an immediate run. Airflow provides task logs, retries, failed-task states, and run history in the DAG and task views.
+
+## Errors and limitations
+
+The test confusion matrix shows that the Medium class is the most difficult
+class to separate from Low and High. The reported metrics describe this
+dataset and split only; they do not establish clinical validity or
+generalization to another institution or population.
+
+Limitations include self-reported and simulated survey values, ambiguous
+definitions for some time fields, missing values, possible measurement bias,
+and the absence of clinical outcome validation. Predictions are therefore
+educational demonstrations of a classification pipeline, not recommendations
+about individual students.
+
+The model must never be used for clinical diagnosis, clinical screening,
+disciplinary action, student selection or exclusion, official evaluation, or
+as a replacement for qualified mental-health professionals.
