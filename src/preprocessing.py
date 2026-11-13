@@ -19,7 +19,7 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
         "Financial_Stress",
     }
 
-    def fit(self, X):
+    def fit(self, X, y=None):
         if not isinstance(X, pd.DataFrame):
             raise TypeError("FeatureEngineer expects a pandas DataFrame")
         missing_columns = self._required_columns.difference(X.columns)
@@ -74,7 +74,7 @@ class IQRClipper(BaseEstimator, TransformerMixin):
             raise ValueError("factor must be greater than zero")
         self.factor = factor
 
-    def fit(self, X):
+    def fit(self, X, y=None):
         X_array = check_array(X, dtype=float, ensure_2d=True)
         self.n_features_in_ = X_array.shape[1]
         self.bounds_ = []
