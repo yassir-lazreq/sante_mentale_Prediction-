@@ -16,7 +16,9 @@ st.set_page_config(page_title="Student Mental Health Risk", layout="wide")
 st.title("🧠 Student Mental Health Risk Prediction")
 st.markdown("""
 **Pedagogical Prototype:** This tool predicts the mental health risk level (Low / Medium / High). 
-*Disclaimer: This is a machine learning prototype and must NOT be used as a clinical diagnostic tool.*
+*Disclaimer: This educational prototype must not be used for clinical diagnosis,
+clinical screening, disciplinary decisions, student selection, exclusion, or
+official individual assessment. It does not replace qualified professional support.*
 """)
 
 # Load Model and Metrics
@@ -49,10 +51,11 @@ with tab1:
         with open(cm_path, 'r') as f:
             cm = json.load(f)
             
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         col1.metric("Accuracy", f"{metrics['accuracy']*100:.2f}%")
-        col2.metric("Macro Recall", f"{metrics['recall_macro']*100:.2f}%")
-        col3.metric("Macro F1-Score", f"{metrics['f1_macro']*100:.2f}%")
+        col2.metric("Macro Precision", f"{metrics['precision_macro']*100:.2f}%")
+        col3.metric("Macro Recall", f"{metrics['recall_macro']*100:.2f}%")
+        col4.metric("Macro F1-Score", f"{metrics['f1_macro']*100:.2f}%")
         
         st.divider()
         st.subheader("Confusion Matrix")
