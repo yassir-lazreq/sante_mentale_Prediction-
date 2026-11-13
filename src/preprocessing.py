@@ -13,15 +13,13 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
 
     _required_columns = {
         "Sleep_Hours",
-        "Screen_Time_Hours",
-        "Social_Media_Hours",
         "Study_Hours_Per_Week",
         "Attendance_Rate",
         "Family_Support",
         "Financial_Stress",
     }
 
-    def fit(self, X, y=None):
+    def fit(self, X):
         if not isinstance(X, pd.DataFrame):
             raise TypeError("FeatureEngineer expects a pandas DataFrame")
         missing_columns = self._required_columns.difference(X.columns)
@@ -76,7 +74,7 @@ class IQRClipper(BaseEstimator, TransformerMixin):
             raise ValueError("factor must be greater than zero")
         self.factor = factor
 
-    def fit(self, X, y=None):
+    def fit(self, X):
         X_array = check_array(X, dtype=float, ensure_2d=True)
         self.n_features_in_ = X_array.shape[1]
         self.bounds_ = []
@@ -113,7 +111,7 @@ def get_preprocessor(num_cols, cat_cols):
 
     # Numeric pipeline: Impute median -> Clip outliers -> Scale
     num_pipeline = Pipeline([
-        ('imputer', SimpleImputer(strategy='median', add_indicator=True)),
+        ('imputer', SimpleImputer(strategy='median')),
         ('clipper', IQRClipper(factor=1.5)),
         ('scaler', StandardScaler())
     ])
