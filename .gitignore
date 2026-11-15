@@ -4,6 +4,7 @@ docs/planification_jira.csv
 .venv/
 venv/
 env/
+docs/
 
 # Python cache and test artifacts
 __pycache__/
